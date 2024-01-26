@@ -22,7 +22,7 @@ function setup() {
 function draw() {
   if (mouseIsPressed) {
     stroke(drawingColor);
-    strokeWeight(5);
+    strokeWeight(10);
     line(pmouseX, pmouseY, mouseX, mouseY);
   }
 }

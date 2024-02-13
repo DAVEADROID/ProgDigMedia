@@ -1,9 +1,10 @@
 let spriteSheet;
-
+let spriteSheet2;
 let walkingAnimation;
 let walkingAnimation2;
 function preload() {
   spriteSheet = loadImage("assets/SpelunkyGuy.png");
+  spriteSheet2 = loadImage("assets/Green.png");
 }
 
 function setup(){
@@ -12,6 +13,8 @@ function setup(){
 
   walkingAnimation = new WalkingAnimation(spriteSheet, 80,80,200,200,9);
   walkingAnimation2 = new WalkingAnimation(spriteSheet, 80,80,100,300,9);
+  walkingAnimation3 = new WalkingAnimation(spriteSheet2, 80,80,300,150,9);
+  walkingAnimation4 = new WalkingAnimation(spriteSheet2, 80,80,300,350,9);
 }
 
 function draw() {
@@ -19,16 +22,22 @@ function draw() {
 
   walkingAnimation.draw();
   walkingAnimation2.draw();
+  walkingAnimation3.draw();
+  walkingAnimation4.draw();
 }
 
 function keyPressed() {
   walkingAnimation.keyPressed();
   walkingAnimation2.keyPressed();
+  walkingAnimation3.keyPressed();
+  walkingAnimation4.keyPressed();
 }
 
 function keyReleased(){
   walkingAnimation.keyReleased();
   walkingAnimation2.keyReleased();
+  walkingAnimation3.keyReleased();
+  walkingAnimation4.keyReleased();
 }
 
 class WalkingAnimation {
@@ -86,3 +95,4 @@ class WalkingAnimation {
     }
   }
 }
+

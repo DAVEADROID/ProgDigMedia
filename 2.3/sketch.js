@@ -18,7 +18,7 @@ function setup() {
   Tone.start();
 
   // Create an image that acts as a button
-  let imgButton = createImg('hands.jpeg', 'Clap');
+  let imgButton = createImg('assets/hands.jpeg');
   imgButton.position(20, 20);
   imgButton.mousePressed(clapSound);
 }

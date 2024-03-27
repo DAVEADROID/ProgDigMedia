@@ -1,3 +1,4 @@
+User
 // sketch.js
 
 let drawingColor = [255, 0, 0];

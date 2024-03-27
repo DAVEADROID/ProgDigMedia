@@ -32,7 +32,7 @@ function setup() {
   createColorButton('white', 200);
   createColorButton('black', 225);
   
-  createClearButton('Clear', 250); // Create clear button
+  createClearButton('Clear', 250);
   
   background(220);
   frameRate(300);
@@ -103,8 +103,6 @@ function clearCanvas() {
 }
 
 function playClearSound() {
-  // You can define the sound for clearing the canvas here
-  // For example, play a short beep sound
   let beep = new Tone.Synth().toDestination();
   beep.triggerAttackRelease('G5', '8n');
 }

@@ -15,7 +15,6 @@ let colorSounds = {
 };
 let synth;
 let isDrawing = false;
-let drawingSound;
 let sequence;
 
 function setup() {
@@ -32,6 +31,8 @@ function setup() {
   createColorButton('brown', 175);
   createColorButton('white', 200);
   createColorButton('black', 225);
+  
+  createClearButton('Clear', 250); // Create clear button
   
   background(220);
   frameRate(300);
@@ -67,6 +68,15 @@ function createColorButton(color, yPos) {
   });
 }
 
+function createClearButton(label, yPos) {
+  let button = createButton(label);
+  button.position(0, yPos);
+  button.mousePressed(function () {
+    clearCanvas();
+    playClearSound();
+  });
+}
+
 function changeColor(color) {
   drawingColor = color;
 }
@@ -80,11 +90,21 @@ function startDrawingSound() {
   isDrawing = true;
 }
 
-function stopDrawingSound() {
-  isDrawing = false;
-}
 function playDrawingSound() {
-  let time = '8n'; 
-  let pitch = 'C6';
-  synth.triggerAttackRelease(pitch, time);
+  let key = colorSounds[drawingColor];
+  if (key) {
+    synth.triggerAttackRelease(key, '8n');
+  }
+}
+
+function clearCanvas() {
+  clear();
+  background(220);
+}
+
+function playClearSound() {
+  // You can define the sound for clearing the canvas here
+  // For example, play a short beep sound
+  let beep = new Tone.Synth().toDestination();
+  beep.triggerAttackRelease('G5', '8n');
 }

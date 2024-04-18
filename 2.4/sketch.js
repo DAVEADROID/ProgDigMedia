@@ -1,6 +1,6 @@
-// sketch.js
+/// sketch.js
 
-let drawingColor = [255, 0, 0];
+let drawingColor = 'red'; // Default color
 let colorSounds = {
   'red': 'C4',
   'orange': 'D4',
@@ -16,6 +16,8 @@ let colorSounds = {
 let synth;
 let isDrawing = false;
 let sequence;
+let initialNoteArray = ['C4']; // Initial sequence
+let noteArray = initialNoteArray.slice(); // Copy of initial sequence
 
 function setup() {
   createCanvas(750, 500);
@@ -42,16 +44,15 @@ function setup() {
 
   sequence = new Tone.Sequence((time, note) => {
     synth.triggerAttackRelease(note, '8n', time);
-  }, ['C4', 'E4', 'G4', 'C5']).start(0);
+  }, noteArray);
   Tone.Transport.start();
 }
 
 function draw() {
   if (isDrawing && mouseIsPressed) {
-    stroke(drawingColor);
+    stroke(color(drawingColor));
     strokeWeight(10);
     line(pmouseX, pmouseY, mouseX, mouseY);
-    playDrawingSound();
   }
 }
 
@@ -64,6 +65,7 @@ function createColorButton(color, yPos) {
   button.mousePressed(function () {
     changeColor(color);
     playColorSound(color);
+    addToSequence(color);
     startDrawingSound();
   });
 }
@@ -86,20 +88,35 @@ function playColorSound(color) {
   synth.triggerAttackRelease(key, '5s');
 }
 
+function addToSequence(color) {
+  let key = colorSounds[color];
+  noteArray.push(key);
+  sequence.dispose(); // Clear current sequence
+  sequence = new Tone.Sequence((time, note) => {
+    synth.triggerAttackRelease(note, '8n', time);
+  }, noteArray);
+}
+
 function startDrawingSound() {
   isDrawing = true;
 }
 
-function playDrawingSound() {
-  let key = colorSounds[drawingColor];
-  if (key) {
-    synth.triggerAttackRelease(key, '8n');
-  }
+function mousePressed() {
+  sequence.start();
+}
+
+function mouseReleased(){
+  sequence.stop();
 }
 
 function clearCanvas() {
   clear();
   background(220);
+  noteArray = initialNoteArray.slice(); // Reset noteArray to initial state
+  sequence.dispose(); // Delet the current sequence
+  sequence = new Tone.Sequence((time, note) => {
+    synth.triggerAttackRelease(note, '8n', time);
+  }, noteArray);
 }
 
 function playClearSound() {
